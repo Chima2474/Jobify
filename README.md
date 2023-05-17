@@ -1049,7 +1049,7 @@ Navbar.js
 ```js
 import { toggleSidebar } from '../features/user/userSlice';
 
-const toggle = () => {
+const toggle = (),=> {
   dispatch(toggleSidebar());
 };
 

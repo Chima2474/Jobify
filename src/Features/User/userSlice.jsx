@@ -21,13 +21,13 @@ const initialState = {
 export const registerUser = createAsyncThunk(
   "user/registerUser",
   async (user, thunkAPI) => {
-    registerUserThunk("/auth/register", user, thunkAPI);
+    return registerUserThunk("/auth/register", user, thunkAPI);
   }
 );
 export const loginUser = createAsyncThunk(
   "user/loginUser",
   async (user, thunkAPI) => {
-    loginUserThunk("/auth/login", user, thunkAPI);
+    return loginUserThunk("/auth/login", user, thunkAPI);
   }
 );
 
@@ -80,10 +80,6 @@ const userSlice = createSlice({
       state.isLoading = false;
       toast.error(payload);
     },
-    [loginUser.rejected]: (state, { payload }) => {
-      state.isLoading = false;
-      toast.error(payload);
-    },
     [updateUser.pending]: (state) => {
       state.isLoading = true;
     },
@@ -103,3 +99,4 @@ const userSlice = createSlice({
 
 export default userSlice.reducer;
 export const { toggleSidebar, logoutUser } = userSlice.actions;
+console.log(userSlice.actions);
