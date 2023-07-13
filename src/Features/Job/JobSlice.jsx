@@ -97,4 +97,3 @@ const jobSlice = createSlice({
 
 export default jobSlice.reducer;
 export const { handleChange, clearValues, setEditJob } = jobSlice.actions;
-console.log(jobSlice.actions);

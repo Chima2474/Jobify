@@ -5,6 +5,8 @@ import Navbar from "./Navbar";
 import BigSideBar from "./BigSideBar";
 import JobContainer from "./JobContainer";
 import SearchContainer from "./SearchContainer";
+import StatsContainer from "./StatsContainer";
+import ChartContainer from "./ChartContainer";
 
 export {
   Logo,
@@ -14,4 +16,6 @@ export {
   Navbar,
   JobContainer,
   SearchContainer,
+  StatsContainer,
+  ChartContainer,
 };
