@@ -9,7 +9,7 @@ import {
 } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import Logo from "./Logo";
-import { toggleSidebar, logoutUser } from "../Features/User/userSlice";
+import { toggleSidebar, clearStore } from "../Features/User/userSlice";
 
 const Navbar = () => {
   const { user, isSidebarOpen } = useSelector((store) => store.user);
@@ -21,7 +21,7 @@ const Navbar = () => {
   };
 
   const logout = () => {
-    dispatch(logoutUser());
+    dispatch(clearStore("Logout Succesfull"));
   };
   return (
     <Wrapper>

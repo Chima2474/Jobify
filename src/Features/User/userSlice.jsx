@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
-import GeneralFetch from "../../utils/axios";
 import {
   addUserToLocalStorage,
   getUserFromLocalStorage,
   removeUserFromLocalStorahge,
 } from "../../utils/LocalStorage";
 import {
+  clearStoreThunk,
   loginUserThunk,
   registerUserThunk,
   updateUserThunk,
@@ -37,6 +37,8 @@ export const updateUser = createAsyncThunk(
     return updateUserThunk("/auth/updateUser", user, thunkAPI);
   }
 );
+
+export const clearStore = createAsyncThunk("user/clearStore", clearStoreThunk);
 
 const userSlice = createSlice({
   name: "User",
@@ -94,9 +96,15 @@ const userSlice = createSlice({
       state.isLoading = false;
       toast.error(payload);
     },
+
+    [clearStore.fulfilled]: () => {
+      toast.success("Logged out successfull");
+    },
+    [clearStore.rejected]: () => {
+      toast.error("There was an error");
+    },
   },
 });
 
 export default userSlice.reducer;
 export const { toggleSidebar, logoutUser } = userSlice.actions;
-console.log(userSlice.actions);

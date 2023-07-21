@@ -1,4 +1,7 @@
+import { removeUserFromLocalStorahge } from "../../utils/LocalStorage";
 import GeneralFetch from "../../utils/axios";
+import { clearAllJobsState } from "../AllJobs/AllJobsSlice";
+import { clearValues } from "../Job/JobSlice";
 import { logoutUser } from "./userSlice";
 
 export const registerUserThunk = async (url, user, thunkAPI) => {
@@ -6,7 +9,7 @@ export const registerUserThunk = async (url, user, thunkAPI) => {
     const resp = await GeneralFetch.post(url, user);
     return resp.data;
   } catch (error) {
-    return thunkAPI.rejectWithValue(error.response.data.msg);
+    return checkForUnauthorizedResponse(error, thunkAPI);
   }
 };
 
@@ -15,7 +18,7 @@ export const loginUserThunk = async (url, user, thunkAPI) => {
     const resp = await GeneralFetch.post(url, user);
     return resp.data;
   } catch (error) {
-    return thunkAPI.rejectWithValue(error.response.data.msg);
+    return checkForUnauthorizedResponse(error, thunkAPI);
   }
 };
 
@@ -28,11 +31,18 @@ export const updateUserThunk = async (url, user, thunkAPI) => {
     });
     return resp.data;
   } catch (error) {
-    // console.log(error.response);
-    if (error.response.status === 401) {
-      thunkAPI.dispatch(logoutUser());
-      return thunkAPI.rejectWithValue("Unauthorized! Logging Out...");
-    }
-    return thunkAPI.rejectWithValue(error.response.data.msg);
+    return checkForUnauthorizedResponse(error, thunkAPI);
+  }
+};
+
+export const clearStoreThunk = async (message, thunkAPI) => {
+  try {
+    thunkAPI.dispatch(logoutUser(message));
+    thunkAPI.dispatch(clearAllJobsState());
+    thunkAPI.dispatch(clearValues());
+    removeUserFromLocalStorahge();
+    return Promise.resolve();
+  } catch (error) {
+    return Promise.reject();
   }
 };
